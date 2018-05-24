@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Testing page of data tracking</title>
+  <script src="library/piwik.min.js"></script>
+  <script src="https://www.googletagmanager.com/gtag/js"></script>
+  <script src="src/trackerClient.js"></script>
+</head>
+<body>
+  <h1>Page 1</h1>
+  <button id="start_event">Event Button</button>
+  <script>
+var myTracker = new trackerClient({
+  GA: {
+      trackingId: "UA-123456-2"  // replace with your tracking ID
+    },
+    Piwik: {
+      trackingUrl: "https://localhost/piwik.php",  // replace with your piwik tracking url
+      siteId: 5,  // replace with your piwik site ID
+      userId: "user-ID", // replace with user ID, should be same as MEMBER_ID/ANONYMOUS_ID
+      isSPA: true // if the page is single page application
+    }
+}, false);
+myTracker.pageView({
+  GA: true,
+  Piwik: true
+});
+document.getElementById('start_event').addEventListener('click', function(e){
+  myTracker.fire({
+    GA: true,
+    Piwik: true
+  },
+  {
+    category: "access",
+    action: "login",
+    label: "google",
+    nonInteraction: false,
+    customDimensions: {
+      5: "Eric"
+    }
+  });
+});
+  </script>
+</body>
+</html>
