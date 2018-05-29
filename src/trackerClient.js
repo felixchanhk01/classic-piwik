@@ -120,7 +120,7 @@ class trackerClient{
       var action = event.action;
       var label = !(event.label === null)?event.label:null;
       var value = !(event.value === null)?event.value:null;
-      var customDimensions = event.customDimensions?event.customDimensions:null;
+      var customDimensions = event.customDimensions?event.customDimensions:{};
       var nonInteraction = !(event.nonInteraction === null)?event.nonInteraction:false;
 
       var params = {};
