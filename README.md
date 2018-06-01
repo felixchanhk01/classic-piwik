@@ -59,7 +59,7 @@ myTracker.pageView({
 myTracker.pageView({
   GA: true,
   Piwik: true
-}, {}, "your-url-here");
+}, {}, "your-url-here", "your-path-here");
 ```
 #### Fire events
 
@@ -85,4 +85,12 @@ myTracker.fire(
 
 ```js
 myTracker.setUserId('new_user_id');
+```
+
+#### Test the page by creating local http server
+
+Use the library `http.server` in *Python 3* to create local http server. The GA event will not fire when the webpage protocol is `file://`
+
+```sh
+python3 -m http.server
 ```
