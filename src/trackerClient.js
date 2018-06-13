@@ -37,9 +37,17 @@ class trackerClient{
       window.dataLayer.push(arguments);
     }
     this.gtag("js", new Date());
-    this.gtag("config", this.GAId, {
-      send_page_view: sendPageView
-    });
+    if(Array.isArray(this.GAId)){
+      this.GAId.map(function(gid){
+        this.gtag("config", gid, {
+          send_page_view: sendPageView
+        });
+      }, this);
+    }else{
+      this.gtag("config", this.GAId, {
+        send_page_view: sendPageView
+      });
+    }
     this.piwikTracker = window.Piwik.getTracker(this.PiwikUrl, this.siteId);
     this.piwikTracker.setUserId(this.userId);
 
@@ -57,12 +65,21 @@ class trackerClient{
       config[`dimension${key}`] = customDimensions[key];
       this.piwikTracker.setCustomDimension(key, value);
     });
-    this.gtag(
-      "config",
-      this.GAId,
-      Object.assign({}, config, { send_page_view: false })
-      // always set send_page_view to false when you call `config`, unless you want to sent page view
-    );
+    if(Array.isArray(this.GAId)){
+      this.GAId.map(function(gid){
+        this.gtag(
+          "config",
+          gid,
+          Object.assign({}, config, { send_page_view: false })
+        );
+      }, this);
+    }else{
+      this.gtag(
+        "config",
+        this.GAId,
+        Object.assign({}, config, { send_page_view: false })
+      );
+    }
     this.gaConfig = config;
     this.currentPathname = '';
   }
@@ -101,14 +118,27 @@ class trackerClient{
 
     if(GA){
       this.gtag("set", { page_location: newLocation });
-      this.gtag(
-        "config",
-        this.GAId,
-        Object.assign({}, this.gaConfig , params, {
-          page_title: window.document.title,
-          page_path: newPathname
-        })
-      );
+      if(Array.isArray(this.GAId)){
+        this.GAId.map(function(gid){
+          this.gtag(
+            "config",
+            gid,
+            Object.assign({}, this.gaConfig , params, {
+              page_title: window.document.title,
+              page_path: newPathname
+            })
+          );
+        }, this);
+      }else{
+        this.gtag(
+          "config",
+          this.GAId,
+          Object.assign({}, this.gaConfig , params, {
+            page_title: window.document.title,
+            page_path: newPathname
+          })
+        );
+      }
     }
     // Clear the old Dimension
     this.setCustomDimension();
