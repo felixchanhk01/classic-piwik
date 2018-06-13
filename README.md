@@ -21,10 +21,28 @@ Include the following scripts between `<head></head>`
 
 #### Initialize the tracker client
 
+For signal GA tracking ID
+
 ```js
 var myTracker = new trackerClient({
   GA: {
       trackingId: "UA-123456-2"  // replace with your tracking ID
+    },
+    Piwik: {
+      trackingUrl: "https://localhost/piwik.php",  // replace with your piwik tracking url
+      siteId: 5,  // replace with your piwik site ID
+      userId: "user-ID", // replace with user ID, should be same as MEMBER_ID/ANONYMOUS_ID
+      isSPA: true // if the page is single page application
+    }
+}, false);
+```
+
+For multiple GA tracking ID
+
+```js
+var myTracker = new trackerClient({
+  GA: {
+      trackingId: ["UA-123456-2", "UA-123456-3", "UA-123456-4"]  // replace with your tracking ID
     },
     Piwik: {
       trackingUrl: "https://localhost/piwik.php",  // replace with your piwik tracking url
