@@ -120,7 +120,7 @@ myTracker.disableGA({
 And reset the action after the PV / events:
 
 ```js
-myTracker.disableGA(false);
+myTracker.resetGAFlags();
 ```
 
 However, if all GA profiles are disabled, please set `GA: false` in event or PV.

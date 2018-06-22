@@ -175,19 +175,30 @@ class trackerClient{
   }
 
   disableGA(ga_list = null){
-    if(ga_list === null || ga_list === false || ga_list === true){
-      var temp_stage = ga_list?ga_list:false;
+    if(ga_list === true){
       if(Array.isArray(this.GAId)){
         this.GAId.map(function(gid){
-          window['ga-disable-'+gid] = temp_stage;
+          window['ga-disable-'+gid] = true;
         }, this);
       }else if(this.GAId !== null){
-        window['ga-disable-'+this.GAId] = temp_stage;
+        window['ga-disable-'+this.GAId] = true;
       }
     }else if(ga_list === Object(ga_list)){
       Object.keys(ga_list).map(function(gid){
         window['ga-disable-'+gid] = ga_list[gid]?true:false;
       });
+    }else{
+      throw("Invalid GA profile list");
+    }
+  }
+
+  resetGAFlags(){
+    if(Array.isArray(this.GAId)){
+      this.GAId.map(function(gid){
+        window['ga-disable-'+gid] = false;
+      }, this);
+    }else if(this.GAId !== null){
+      window['ga-disable-'+this.GAId] = false;
     }
   }
 }
