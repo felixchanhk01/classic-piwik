@@ -105,6 +105,26 @@ myTracker.fire(
 myTracker.setUserId('new_user_id');
 ```
 
+#### Disable specific GA profile in PV / events
+
+When we want to disable specific profile in GA, for example, disable `UA-123456-2` and `UA-123456-4`, the following action should be done before PV / events: 
+
+```js
+myTracker.disableGA({
+  'UA-123456-2': true,
+  'UA-123456-3': false,
+  'UA-123456-4': true,
+});
+```
+
+And reset the action after the PV / events:
+
+```js
+myTracker.resetGAFlags();
+```
+
+However, if all GA profiles are disabled, please set `GA: false` in event or PV.
+
 #### Test the page by creating local http server
 
 Use the library `http.server` in *Python 3* to create local http server. The GA event will not fire when the webpage protocol is `file://`
